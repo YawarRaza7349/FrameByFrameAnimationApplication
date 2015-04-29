@@ -201,23 +201,26 @@ void draw()
             }
           }
         }
-        switch(selection)
+        if(mouseX >= 200 && mouseX < 1640)
         {
-          case DRAW:
-            // freeform drawing as a series of small lines
-            buffer.beginDraw();
-            buffer.strokeWeight(brush);
-            buffer.stroke(left);
-            buffer.line(pmouseX, pmouseY, mouseX, mouseY);
-            buffer.endDraw();
-            bools.set(index, true);
-            break;
-          case FILL:
-            if(mouseX >= 200 && mouseX < 1640)
-            {
+          switch(selection)
+          {
+            case COLOR:
+            case BRUSH:
+              selection = DRAW;
+            case DRAW:
+              // freeform drawing as a series of small lines
+              buffer.beginDraw();
+              buffer.strokeWeight(brush);
+              buffer.stroke(left);
+              buffer.line(pmouseX, pmouseY, mouseX, mouseY);
+              buffer.endDraw();
+              bools.set(index, true);
+              break;
+            case FILL:
               fillRegion(mouseX, mouseY, left);
-            }
-            break;
+              break;
+          }
         }
       }
       else
@@ -234,21 +237,24 @@ void draw()
             }
           }
         }
-        switch(selection)
+        if(mouseX >= 200 && mouseX < 1640)
         {
-          case DRAW:
-            buffer.beginDraw();
-            buffer.strokeWeight(brush);
-            buffer.stroke(right);
-            buffer.line(pmouseX, pmouseY, mouseX, mouseY);
-            buffer.endDraw();
-            bools.set(index, true);
-          case FILL:
-            if(mouseX >= 200 && mouseX < 1640)
-            {
+          switch(selection)
+          {
+            case COLOR:
+            case BRUSH:
+              selection = DRAW;
+            case DRAW:
+              buffer.beginDraw();
+              buffer.strokeWeight(brush);
+              buffer.stroke(right);
+              buffer.line(pmouseX, pmouseY, mouseX, mouseY);
+              buffer.endDraw();
+              bools.set(index, true);
+            case FILL:
               fillRegion(mouseX, mouseY, right);
-            }
-            break;
+              break;
+          }
         }
       }
     }
