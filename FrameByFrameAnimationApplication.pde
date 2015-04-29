@@ -173,18 +173,22 @@ void draw()
         if(mouseX < 150 && mouseX > 50 && mouseY < 150 && mouseY > 50)
         {
           selection = DRAW;
+          input = "";
         }
         if(mouseX < 150 && mouseX > 50 && mouseY < 300 && mouseY > 200)
         {
           selection = FILL;
+          input = "";
         }
         if(mouseX < 150 && mouseX > 50 && mouseY < 450 && mouseY > 350)
         {
           selection = COLOR;
+          input = "";
         }
         if(mouseX < 150 && mouseX > 50 && mouseY < 600 && mouseY > 500)
         {
           selection = BRUSH;
+          input = "";
         }
         if(mouseX > 1665 && mouseX < 1815)
         {
@@ -326,6 +330,7 @@ void draw()
       // save the animation
       if(key == 's')
       {
+        frames.set(index, buffer.get(200, 0, 1440, height));
         for(int i = 0; i < frames.size(); ++i)
         {
           // only save frames if they've been modified
@@ -390,18 +395,19 @@ void keyTyped()
           input = "";
           selection = DRAW;
           break;
-        default:
-          // press space, then press enter, to toggle onion skins
-          if(input.equals(" "))
-          {
-            onionSkins = !onionSkins;
-          }
-          break;
       }
     }
     else
     {
-      input += str(key);
+      // only allow numeric or space input
+      if((selection == COLOR || selection == BRUSH) && ((key >= '0' && key <= '9') || key == ' '))
+      {
+        input += str(key);
+      }
+      else if(key == ' ')
+      {
+        onionSkins = !onionSkins;
+      }
     }
   }
 }
